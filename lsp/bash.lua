@@ -1,4 +1,4 @@
--- Install with: npm i -g bash-language-server
+-- nvim/lsp/bash.lua
 
 return {
 	cmd = { "bash-language-server", "start" },
