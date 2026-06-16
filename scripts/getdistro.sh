@@ -21,7 +21,6 @@ if [ ! -f /etc/os-release ]; then
     else
         # Give up
         echo "unknown"
-        exit 1
     fi
     exit 0
 fi
