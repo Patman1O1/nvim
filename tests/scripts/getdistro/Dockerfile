@@ -59,7 +59,7 @@ RUN apk add --no-cache bash
 COPY scripts/getdistro.sh .
 RUN chmod +x getdistro.sh
 RUN rm -f /etc/os-release /etc/lsb-release /etc/debian_version /etc/redhat-release
-RUN ! ./getdistro.sh
+RUN ./getdistro.sh
 
 # ==========================================
 # Final Stage
