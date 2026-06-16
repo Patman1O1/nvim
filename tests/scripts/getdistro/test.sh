@@ -9,7 +9,6 @@ NVIM_DIR="${SCRIPT_DIR}/../../.."
 
 echo "Running test suite for getdistro..."
 docker build \
-  --build-arg NVIM_DIR="${NVIM_DIR}" \
   --no-cache \
   -t test-getdistro \
   -f "${SCRIPT_DIR}/Dockerfile" \
