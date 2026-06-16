@@ -1,0 +1,15 @@
+-- nvim/lsp/init.lua
+
+require("lsp.bash")
+require("lsp.c-cpp")
+require("lsp.css")
+require("lsp.docker")
+require("lsp.go")
+require("lsp.html")
+require("lsp.js-ts")
+require("lsp.json")
+require("lsp.lua")
+require("lsp.python")
+require("lsp.rust")
+require("lsp.toml")
+require("lsp.yaml")
