@@ -1,3 +1,5 @@
+-- nvim/lua/plugins/coding.lua
+
 vim.pack.add({
 	"https://gitlab.com/tduyng/codeme.nvim",
 })
