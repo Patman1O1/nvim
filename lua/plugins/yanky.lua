@@ -1,4 +1,4 @@
-# nvim/lua/plugins/yanky.lua
+-- nvim/lua/plugins/yanky.lua
 
 vim.pack.add({
         "https://github.com/gbprod/yanky.nvim",
