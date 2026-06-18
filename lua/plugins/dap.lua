@@ -1,3 +1,5 @@
+-- nvim/lua/plugins/dap.lua
+
 vim.pack.add({
 	{ src = "https://github.com/mfussenegger/nvim-dap", version = "b516f20b487b0ac6a281e376dfac1d16b5040041" },
 	{ src = "https://github.com/igorlfs/nvim-dap-view", version = vim.version.range("1.*") },
