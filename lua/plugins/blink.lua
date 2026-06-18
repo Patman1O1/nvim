@@ -1,3 +1,5 @@
+-- nvim/lua/plugins/blink.lua
+
 vim.pack.add({
 	{
 		src = "https://github.com/saghen/blink.cmp",
