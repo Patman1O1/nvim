@@ -9,14 +9,14 @@ TAB="    "
 REPO_DIR="$(cd -- "$(dirname -- "${0}")" >/dev/null 2>&1 && pwd)/.."
 
 # Ensure correct usage
-if [ "${#}" -gt 1 ] || { [ "${FORCE_FLAG}" != "-f" ] && [ "${FORCE_FLAG}" != "--force" ]; }; then
+if [ "${#}" -gt 1 ] || [ "${#}" -eq 1 ] && { [ "${FORCE_FLAG}" != "-f" ] && [ "${FORCE_FLAG}" != "--force" ]; }; then
     printf "USAGE\n${TAB}${0} [options]\nOPTIONS\n${TAB}-f --force${TAB}Replace ~/.config/nvim\n"
     exit 1
 fi
 
 # Do nothing if ~/.config/nvim is not empty
-if [ ! -e "${HOME}/.config/nvim" ]; then
-    echo "${HOME}/.config/nvim is not empty"
+if [ -e "${HOME}/.config/nvim" ]; then
+    echo "${0}: ${HOME}/.config/nvim is not empty"
     exit 1
 fi
 
