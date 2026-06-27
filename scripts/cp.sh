@@ -36,7 +36,11 @@ if [ "${#}" -eq 1 ]; then
         show_usage
 	exit 1
     fi
+    
+    # Remove everything inside of ~/.config/nvim including the directory itself
+    rm -rf "${HOME}/.config/nvim"
 
+    # Copy the GitHub repo
     copy
     exit 0
 elif [ "${#}" -eq 0 ]; then
@@ -45,6 +49,7 @@ elif [ "${#}" -eq 0 ]; then
 	exit 1
     fi
 
+    # Copy the GitHub repo
     copy
     exit 0
 else
