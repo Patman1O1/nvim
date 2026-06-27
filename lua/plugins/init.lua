@@ -1,3 +1,3 @@
 -- nvim/lua/plugins/init.lua
 
-require("nvim-tree")
+require("plugins.nvim-tree")
