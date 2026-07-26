@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-FONT_NAME="JetBrainsMono"
+FONT_NAME="${1:-JetBrainsMono}"
 FONTS_DIR="${HOME}/.local/share/fonts"
 
 # Go to the temporary directory
