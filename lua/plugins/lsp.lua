@@ -1,65 +1,35 @@
+-- nvim/lua/plugins/lsp.lua
 return {
-  -- Package Manager for LSP servers, linters, and formatters
-  {
-    "williamboman/mason.nvim",
-    config = function()
-      require("mason").setup()
-    end,
-  },
-  
-  -- Bridge between Mason and nvim-lspconfig
-  {
-    "williamboman/mason-lspconfig.nvim",
-    dependencies = { "williamboman/mason.nvim" },
-    config = function()
-      require("mason-lspconfig").setup({
-        -- Automatically install these servers if not present
-        ensure_installed = { "lua_ls", "ts_ls", "pyright" }, 
-      })
-    end,
-  },
+  -- Mason core (repo moved to mason-org; williamboman still redirects)
+  { "mason-org/mason.nvim", opts = {} },
 
-  -- Core LSP Configurations and Server Attachment
+  -- Mason <-> LSP bridge: installs AND auto-enables the real LSP servers.
+  -- NOTE (v2): there is NO setup_handlers()/handlers mechanism anymore.
+  -- Per-server config lives in after/lsp/<name>.lua; enabling is automatic.
   {
-    "neovim/nvim-lspconfig",
-    dependencies = { 
-      "williamboman/mason-lspconfig.nvim",
-      "hrsh7th/cmp-nvim-lsp" -- Connects LSP to autocomplete
+    "mason-org/mason-lspconfig.nvim",
+    dependencies = {
+      "mason-org/mason.nvim",
+      "neovim/nvim-lspconfig",
     },
-    config = function()
-      local lspconfig = require("lspconfig")
-      local capabilities = require("cmp_nvim_lsp").default_capabilities()
-
-      -- Keymaps to trigger when an LSP connects to a file
-      vim.api.nvim_create_autocmd("LspAttach", {
-        group = vim.api.nvim_create_augroup("UserLspConfig", {}),
-        callback = function(ev)
-          local opts = { buffer = ev.buf }
-          vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)      -- Go to definition
-          vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)           -- Show documentation
-          vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts) -- Rename symbol
-          vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)     -- Find references
-        end,
-      })
-
-      -- Set up servers using mason-lspconfig's handler
-      require("mason-lspconfig").setup_handlers({
-        function(server_name)
-          lspconfig[server_name].setup({
-            capabilities = capabilities,
-          })
-        end,
-      })
-    end,
+    opts = {
+      -- NOTE: these are lspconfig SERVER names, not Mason package names
+      ensure_installed = {
+        "lua_ls", "pyright", "ruff",
+        "vtsls", "eslint", "biome",
+        "gopls", "rust_analyzer",
+        "bashls", "cssls", "tailwindcss", "html",
+        "jsonls", "yamlls", "dockerls", "taplo",
+      },
+      -- automatic_enable = true is the DEFAULT — it runs vim.lsp.enable()
+      -- for each installed server, so you don't list these yourself.
+    },
   },
 
-  -- Autocompletion Engine
+  -- Autocompletion + the bits mason-lspconfig doesn't cover
   {
     "hrsh7th/nvim-cmp",
-    dependencies = {
-      "hrsh7th/cmp-nvim-lsp",
-      "L3MON4D3/LuaSnip", -- Snippet engine required for nvim-cmp
-    },
+    dependencies = { "hrsh7th/cmp-nvim-lsp", "L3MON4D3/LuaSnip" },
     config = function()
       local cmp = require("cmp")
       cmp.setup({
@@ -76,7 +46,29 @@ return {
           { name = "nvim_lsp" },
         }),
       })
-    end,
-  }
-}
 
+      -- Completion capabilities for EVERY server
+      vim.lsp.config("*", {
+        capabilities = require("cmp_nvim_lsp").default_capabilities(),
+      })
+
+      -- Keymaps on attach
+      vim.api.nvim_create_autocmd("LspAttach", {
+        group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+        callback = function(ev)
+          local opts = { buffer = ev.buf }
+          vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+          vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+          vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+          vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+        end,
+      })
+
+      -- Servers mason-lspconfig can't auto-enable (not installed via Mason):
+      --   clangd        -> system package manager (no ARM64 Mason binary)
+      --   stylua        -> a formatter package, not an lspconfig server
+      --   oxlint/oxfmt  -> installed via pnpm, not Mason
+      vim.lsp.enable({ "clangd", "stylua", "oxlint", "oxfmt" })
+    end,
+  },
+}
