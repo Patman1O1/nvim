@@ -1,7 +1,5 @@
 #!/bin/sh
 
-# nvim/scripts/install-nvim.sh
-
 set -eu
 
 OS="$(echo "$(uname -s)" | tr '[:upper:]' '[:lower:]')"
