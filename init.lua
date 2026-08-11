@@ -16,7 +16,7 @@ local lazy_config = require "config.lazy"
 -- load plugins
 require("lazy").setup({
   {
-    "Patman1O1/neovim",
+    "Patman1O1/nvim",
     lazy = false,
     branch = "main",
     import = "plugins",
