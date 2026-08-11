@@ -33,5 +33,5 @@ require "config.options"
 require "config.autocmds"
 
 vim.schedule(function()
-  require "mappings"
+  require "config.mappings"
 end)
