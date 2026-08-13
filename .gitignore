@@ -1,1 +1,10 @@
+# IDEs
+.idea/
+.vs/
+.vscode/
+
+# Mac
+.DS_Store
+
+# Git
 .git
