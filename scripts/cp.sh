@@ -24,7 +24,7 @@ copy() {
     cd "${HOME}/.config/nvim"
 
     # Remove unnecessary files and directories
-    rm -rf .git
+    rm -rf .git scripts
     rm -f .gitignore LICENSE README.md
 
     # Let the user know the operation was successful
