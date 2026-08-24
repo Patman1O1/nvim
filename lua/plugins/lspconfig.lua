@@ -1,4 +1,4 @@
-local langs = require("configs.langs")
+local lsps = require("configs.lsps")
 
 return {
   "neovim/nvim-lspconfig",
@@ -16,7 +16,7 @@ return {
     })
 
     -- Run native setup for each server
-    for _, setup in ipairs(langs.lsps) do
+    for _, setup in ipairs(lsps.lsps) do
       setup()
     end
   end,
