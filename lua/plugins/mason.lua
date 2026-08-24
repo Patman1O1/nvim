@@ -1,4 +1,4 @@
-local lsps = require("configs.lsps")
+local lsps = require("configs.lsp")
 
 return {
   {
