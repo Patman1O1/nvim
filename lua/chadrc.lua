@@ -5,7 +5,7 @@
 ---@type ChadrcConfig
 local M = {}
 
-M.base46 = { theme = "islands_dark" }
+M.base46 = { theme = "tokyonight" }
 
 -- M.nvdash = { load_on_startup = true }
 -- M.ui = {
