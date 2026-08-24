@@ -1,9 +1,9 @@
-local langs = require("configs.langs")
+local lsps = require("configs.lsps")
 
 return {
   "nvim-treesitter/nvim-treesitter",
   opts = {
-    ensure_installed = langs.ts_parsers,
+    ensure_installed = lsps.ts_parsers,
     highlight = { enable = true },
     indent = { enable = true },
   },
