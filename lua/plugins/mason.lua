@@ -1,4 +1,4 @@
-local langs = require("configs.langs")
+local lsps = require("configs.lsps")
 
 return {
   {
@@ -19,9 +19,7 @@ return {
     "williamboman/mason-lspconfig.nvim",
     dependencies = { "williamboman/mason.nvim" },
     opts = {
-      -- Pass the dynamically collected LSP names from your language files
-      ensure_installed = langs.lsp_names,
-      -- Automatically install missing servers when Neovim starts up
+      ensure_installed = lsps.lsp_names,
       automatic_installation = true,
     },
   },
