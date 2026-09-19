@@ -1,9 +1,7 @@
-local lsps = require("configs.lsp")
-
 return {
   {
-    "williamboman/mason.nvim",
-    cmd = "Mason",
+    "mason-org/mason.nvim",
+    cmd = { "Mason", "MasonInstall", "MasonUpdate" },
     keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
     opts = {
       ui = {
@@ -16,11 +14,18 @@ return {
     },
   },
   {
-    "williamboman/mason-lspconfig.nvim",
-    dependencies = { "williamboman/mason.nvim" },
-    opts = {
-      ensure_installed = lsps.lsp_names,
-      automatic_installation = true,
-    },
+    "mason-org/mason-lspconfig.nvim",
+    event = "User FilePost",
+    dependencies = { "mason-org/mason.nvim", "neovim/nvim-lspconfig" },
+    config = function(_, opts)
+      require("mason-lspconfig").setup(opts)
+      require("configs.lspconfig").setup()
+    end,
+    opts = function()
+      return {
+        ensure_installed = require("configs.lspconfig").mason_servers(),
+        automatic_enable = false,
+      }
+    end,
   },
 }
